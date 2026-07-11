@@ -6,6 +6,13 @@ import re
 SITE = "https://www.adfectus-agency.com"
 OUT = os.path.dirname(os.path.abspath(__file__))
 
+# Version d'asset pour le cache-busting : change dès que style.css est modifié,
+# ce qui force le navigateur à recharger la feuille de style (fini le cache figé).
+try:
+    ASSET_VERSION = int(os.path.getmtime(os.path.join(OUT, "assets", "css", "style.css")))
+except OSError:
+    ASSET_VERSION = 1
+
 # Polices : locales (originales du site), voir assets/fonts + @font-face dans style.css
 FONTS = ""
 
@@ -74,7 +81,7 @@ def head(title, desc, page):
 <meta property="og:locale" content="fr_FR">
 <link rel="icon" type="image/png" href="assets/img/6_logo-adfectus-elements_plan-de-travail-1-184.png">
 {FONTS}
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v={ASSET_VERSION}">
 {SCHEMA}
 </head>
 <body>
@@ -222,40 +229,58 @@ pages["index.html"] = {
 </section>
 
 
-<section class="section">
+<section class="section section-dark">
   <div class="container">
     <div class="section-head reveal">
       <p class="eyebrow">Nos Services</p>
       <h2>Une approche 360°, de la stratégie à la production</h2>
     </div>
     <div class="grid grid-3">
-      <article class="card reveal">
-        <h3>Consulting</h3>
+      <article class="card svc reveal">
+        <div class="svc-head">
+          <span class="card-mark"><img src="assets/img/0_logo-adfectus-elements-04-194.png" alt="" aria-hidden="true"></span>
+          <h3>Consulting</h3>
+        </div>
         <p>Le pôle consulting d'Adfectus propose un accompagnement stratégique, opérationnel et créatif dans les domaines du marketing, de la communication, du management organisationnel et de l'innovation numérique (NTIC).</p>
         <a class="card-link" href="consulting.html">En savoir plus</a>
       </article>
-      <article class="card reveal">
-        <h3>Communication &amp; Marketing</h3>
+      <article class="card svc reveal">
+        <div class="svc-head">
+          <span class="card-mark"><img src="assets/img/e_logo-adfectus-elements-02-188.png" alt="" aria-hidden="true"></span>
+          <h3>Communication &amp; Marketing</h3>
+        </div>
         <p>Nous vous offrons un accompagnement d'exception dans l'art du marketing et de la communication, avec une attention minutieuse portée à chaque détail.</p>
         <a class="card-link" href="communication.html">En savoir plus</a>
       </article>
-      <article class="card reveal">
-        <h3>Production</h3>
+      <article class="card svc reveal">
+        <div class="svc-head">
+          <span class="card-mark"><img src="assets/img/6_logo-adfectus-elements_plan-de-travail-1-184.png" alt="" aria-hidden="true"></span>
+          <h3>Production</h3>
+        </div>
         <p>Le pôle audiovisuel d'Adfectus combine créativité, expertise terrain et technologie de pointe pour produire des contenus professionnels qui inspirent, mobilisent et valorisent vos actions.</p>
         <a class="card-link" href="production.html">En savoir plus</a>
       </article>
-      <article class="card reveal">
-        <h3>NTIC</h3>
+      <article class="card svc reveal">
+        <div class="svc-head">
+          <span class="card-mark"><img src="assets/img/t_logo-adfectus-elements-03-186.png" alt="" aria-hidden="true"></span>
+          <h3>NTIC</h3>
+        </div>
         <p>Chez Adfectus, nous croyons que l'innovation digitale est la clé pour construire dès aujourd'hui les solutions de demain.</p>
         <a class="card-link" href="ntic.html">En savoir plus</a>
       </article>
-      <article class="card reveal">
-        <h3>Formation</h3>
+      <article class="card svc reveal">
+        <div class="svc-head">
+          <span class="card-mark"><img src="assets/img/h_logo-adfectus-elements_plan-de-travail-1-436.png" alt="" aria-hidden="true"></span>
+          <h3>Formation</h3>
+        </div>
         <p>Former des esprits, bâtir des projets, faire naître l'avenir. Nous révélons des potentiels, catalysons des idées et transformons des intentions en actions durables.</p>
         <a class="card-link" href="formation.html">En savoir plus</a>
       </article>
-      <article class="card reveal">
-        <h3>Nos Projets</h3>
+      <article class="card svc reveal">
+        <div class="svc-head">
+          <span class="card-mark"><img src="assets/img/c_logo-adfectus-elements-02-780.png" alt="" aria-hidden="true"></span>
+          <h3>Nos Projets</h3>
+        </div>
         <p>Films institutionnels, capsules, spots publicitaires, couvertures d'événements : découvrez une sélection de nos réalisations audiovisuelles.</p>
         <a class="card-link" href="projets.html">Voir la galerie</a>
       </article>
@@ -263,20 +288,20 @@ pages["index.html"] = {
   </div>
 </section>
 
-<section class="partners">
+<section class="partners logo-wall">
   <div class="container">
     <p class="eyebrow reveal" style="justify-content:center">Ils nous ont fait confiance</p>
-    <div class="partners-strip reveal">
-      <span>Myserrena</span>
-      <span>Mobadara</span>
-      <span>Al Akhawayn</span>
-      <span>Acadimia</span>
-      <span>Artisanat &amp; Terroir</span>
+    <div class="logo-row reveal">
+      <div class="logo-item"><img src="assets/img/partners/myserrena.png" alt="Myserrena" loading="lazy"></div>
+      <div class="logo-item"><img src="assets/img/partners/al-akhawayn.png" alt="Al Akhawayn University" loading="lazy"></div>
+      <div class="logo-item"><img src="assets/img/partners/terroir-pni.png" alt="Produits de Terroir — Parc National d'Ifrane" loading="lazy"></div>
+      <div class="logo-item logo-text"><span>Mobadara</span></div>
+      <div class="logo-item logo-text"><span>Acadimia</span></div>
     </div>
   </div>
 </section>
 
-<section class="section section-alt">
+<section class="section section-alt section-dark">
   <div class="container">
     <div class="section-head reveal">
       <p class="eyebrow">Filiales</p>
@@ -357,14 +382,50 @@ pages["communication.html"] = {
 <section class="section section-alt">
   <div class="container">
     <div class="section-head reveal"><h2>Les créatifs, toutes formes</h2></div>
-    <div class="grid grid-3">
-      <article class="card reveal"><h3>Études</h3></article>
-      <article class="card reveal"><h3>Catalogue</h3></article>
-      <article class="card reveal"><h3>Book institutionnel</h3></article>
-      <article class="card reveal"><h3>Lookbook</h3></article>
-      <article class="card reveal"><h3>Stratégie Marketing &amp; Communication</h3></article>
-      <article class="card reveal"><h3>Packaging</h3></article>
-    </div>
+    <ol class="roadmap">
+      <li class="roadmap-step reveal">
+        <span class="rm-node">01</span>
+        <div class="rm-body">
+          <h3>Études</h3>
+          <p>Analyse du marché, de l'audience et de la concurrence pour cadrer chaque prise de parole.</p>
+        </div>
+      </li>
+      <li class="roadmap-step reveal">
+        <span class="rm-node">02</span>
+        <div class="rm-body">
+          <h3>Stratégie Marketing &amp; Communication</h3>
+          <p>Le plan directeur : positionnement, messages clés et plan média.</p>
+        </div>
+      </li>
+      <li class="roadmap-step reveal">
+        <span class="rm-node">03</span>
+        <div class="rm-body">
+          <h3>Book institutionnel</h3>
+          <p>L'entreprise racontée : histoire, valeurs et savoir-faire réunis en un objet de référence.</p>
+        </div>
+      </li>
+      <li class="roadmap-step reveal">
+        <span class="rm-node">04</span>
+        <div class="rm-body">
+          <h3>Catalogue</h3>
+          <p>Vos produits mis en scène et structurés, prêts à convaincre.</p>
+        </div>
+      </li>
+      <li class="roadmap-step reveal">
+        <span class="rm-node">05</span>
+        <div class="rm-body">
+          <h3>Lookbook</h3>
+          <p>La collection sublimée, image par image, pour installer l'univers de la marque.</p>
+        </div>
+      </li>
+      <li class="roadmap-step reveal">
+        <span class="rm-node">06</span>
+        <div class="rm-body">
+          <h3>Packaging</h3>
+          <p>L'emballage qui capte le regard dès le premier coup d'œil.</p>
+        </div>
+      </li>
+    </ol>
   </div>
 </section>
 """ + CTA,
@@ -521,15 +582,15 @@ pages["filiales.html"] = {
   <div class="container">
     <div class="grid grid-3">
       <article class="card reveal">
-        <span class="num">01</span><h3>Ad Retail</h3>
+        <span class="num">01</span><h3><span class="ad-script">ad</span> Retail<span class="dot-red">.</span></h3>
         <p>Dédiée au développement de concepts commerciaux innovants, à l'accompagnement des marques, ainsi qu'aux activités d'import-export, en valorisant les produits à fort potentiel local et international. Elle transforme l'expérience client à travers le digital et les tendances de consommation émergentes.</p>
       </article>
       <article class="card reveal">
-        <span class="num">02</span><h3>Ad Facilities</h3>
+        <span class="num">02</span><h3><span class="ad-script">ad</span> Facilities<span class="dot-red">.</span></h3>
         <p>Spécialisée dans la gestion des installations, des espaces professionnels, et des services de support aux entreprises avec une approche durable, technologique et orientée qualité de vie au travail.</p>
       </article>
       <article class="card reveal">
-        <span class="num">03</span><h3>Ad Invest</h3>
+        <span class="num">03</span><h3><span class="ad-script">ad</span> Invest<span class="dot-red">.</span></h3>
         <p>Pensée comme un catalyseur d'opportunités, cette filiale portera les activités liées à l'investissement, à l'accompagnement de startups, et aux projets à fort impact dans les domaines de l'innovation, de l'économie verte et de l'entrepreneuriat social.</p>
       </article>
     </div>
